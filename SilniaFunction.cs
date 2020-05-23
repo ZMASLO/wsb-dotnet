@@ -22,6 +22,20 @@ namespace FunctionExampleApp
             Silnia silnia = new Silnia();
             string param = req.Query["number"];
             int number = Convert.ToInt32(param);
+
+            if (param == null)
+            {
+                return new BadRequestObjectResult("Parametr musi być jako query!");
+            }
+
+            try
+            {
+                int silniaResult = silnia.calculate(number);
+                return (ActionResult)new OkObjectResult($"Silnia: {param} to {silnia.calculate(number)}");
+            } catch (Exception e)
+            {
+                return new BadRequestObjectResult($"Zły parametr: {param}");
+            }
         }
     }
 }
